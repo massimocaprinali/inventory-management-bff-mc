@@ -1,1 +1,1 @@
-export * from './stock-item-service.config'
+export * from './stock-item-service.config';

@@ -25,7 +25,7 @@ describe('stock-item.controller', () => {
   });
 
   test('canary verifies test infrastructure', () => {
-     expect(true).toEqual(true);
+    expect(true).toEqual(true);
   });
 
   describe('given GET /stock-items', () => {

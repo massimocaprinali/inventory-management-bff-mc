@@ -4,6 +4,7 @@ import {HttpError} from 'typescript-rest/dist/server/model/errors';
 
 import {StockItemModel} from '../models';
 import {StockItemsApi} from '../services';
+import {LoggerApi} from '../logger';
 
 class BadGateway extends HttpError {
   constructor(message?: string) {
@@ -16,12 +17,22 @@ class BadGateway extends HttpError {
 export class StockItemsController {
   @Inject
   service: StockItemsApi;
+  @Inject
+  logger: LoggerApi;
 
   @GET
   async listStockItems(): Promise<StockItemModel[]> {
+    this.logger.info('Request for stock items');
+
     try {
-      return await this.service.listStockItems();
+      const stockItems = await this.service.listStockItems();
+
+      this.logger.debug('Got stock items: ', stockItems);
+
+      return stockItems;
     } catch (err) {
+      this.logger.error('Error getting stockItems: ', err);
+
       throw new BadGateway('There was an error');
     }
   }
